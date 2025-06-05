@@ -13,16 +13,8 @@ func main() {
 		log.Panic(err)
 	}
 
-	db.Set("test key 5", true)
-	db.Set("test key 4", "hello toka db")
-
-	val1, _ := db.Get("test key 1")
-	fmt.Println(val1)
-
-	_, ok := db.Get("aksjdh")
-	fmt.Println(ok)
-
-	if err := db.SaveToFile(); err != nil {
+	if err := db.LoadFromFile(); err != nil {
 		log.Panic(err)
 	}
+	fmt.Println(db.Data)
 }
