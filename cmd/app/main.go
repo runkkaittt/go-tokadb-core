@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
+	"github.com/runkkaittt/go-tokadb-core/internal/server"
 	store "github.com/runkkaittt/go-tokadb-core/internal/store"
 )
 
@@ -13,8 +13,6 @@ func main() {
 		log.Panic(err)
 	}
 
-	if err := db.LoadFromFile(); err != nil {
-		log.Panic(err)
-	}
-	fmt.Println(db.Data)
+	dbServer := server.New()
+	dbServer.Start(db)
 }
