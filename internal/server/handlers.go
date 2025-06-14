@@ -13,11 +13,12 @@ func (s *DBServer) setHandler(db *store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("handling set at %s/n", r.URL.Path)
 
-		// au := r.Header.Get("Auth")
-		// if au != s.AuthToken {
-		// 	log.Println("request with invalid authentication token")
-		// 	return
-		// }
+		au := r.Header.Get("Auth")
+		if au != s.AuthToken {
+			log.Println("request with invalid authentication token")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		bc := mux.Vars(r)["bucket"]
 
@@ -37,11 +38,12 @@ func (s *DBServer) getHandler(db *store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("handling get at %s/n", r.URL.Path)
 
-		// au := r.Header.Get("Auth")
-		// if au != s.AuthToken {
-		// 	log.Println("request with invalid authentication token")
-		// 	return
-		// }
+		au := r.Header.Get("Auth")
+		if au != s.AuthToken {
+			log.Println("request with invalid authentication token")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		bc := mux.Vars(r)["bucket"]
 		key := mux.Vars(r)["key"]
@@ -76,11 +78,12 @@ func (s *DBServer) deleteHandler(db *store.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Printf("handling delete at %s/n", r.URL.Path)
 
-		// au := r.Header.Get("Auth")
-		// if au != s.AuthToken {
-		// 	log.Println("request with invalid authentication token")
-		// 	return
-		// }
+		au := r.Header.Get("Auth")
+		if au != s.AuthToken {
+			log.Println("request with invalid authentication token")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		bc := mux.Vars(r)["bucket"]
 		key := mux.Vars(r)["key"]
