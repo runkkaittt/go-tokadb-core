@@ -37,7 +37,6 @@ func (s *Store) NewBucket(name string) *Bucket {
 	return bucket
 }
 
-// Дополнительные методы для работы с Buckets
 func (s *Store) GetBucket(name string) *Bucket {
 	s.mu.RLock()
 	defer s.mu.RUnlock()

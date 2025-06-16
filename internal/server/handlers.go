@@ -22,6 +22,12 @@ func (s *DBServer) setHandler(db *store.Store) http.HandlerFunc {
 
 		bc := mux.Vars(r)["bucket"]
 
+		if _, ok := db.Buckets[bc]; !ok {
+			log.Println("invalid bucket name")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
 		var field field
 		if err := json.NewDecoder(r.Body).Decode(&field); err != nil {
 			log.Printf("invalid body: %v/n", err)
@@ -47,6 +53,12 @@ func (s *DBServer) getHandler(db *store.Store) http.HandlerFunc {
 
 		bc := mux.Vars(r)["bucket"]
 		key := mux.Vars(r)["key"]
+
+		if _, ok := db.Buckets[bc]; !ok {
+			log.Println("invalid bucket name")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		val, ok := db.Buckets[bc].Get(key)
 		if !ok {
@@ -87,6 +99,12 @@ func (s *DBServer) deleteHandler(db *store.Store) http.HandlerFunc {
 
 		bc := mux.Vars(r)["bucket"]
 		key := mux.Vars(r)["key"]
+
+		if _, ok := db.Buckets[bc]; !ok {
+			log.Println("invalid bucket name")
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
 
 		go db.Buckets[bc].Delete(key)
 		w.WriteHeader(http.StatusOK)

@@ -21,6 +21,6 @@ func main() {
 	}
 
 	dbServer := server.New()
-	fmt.Println(dbServer.AuthToken)
+	fmt.Println("Auth Token:", dbServer.AuthToken)
 	dbServer.Start(db)
 }
